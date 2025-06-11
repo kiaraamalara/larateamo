@@ -2,88 +2,82 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Para meu amor 💙</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surpresa Romântica</title>
   <style>
     body {
       margin: 0;
-      background-color: #add8e6;
+      background: linear-gradient(to bottom, #b3e0ff, #e6f7ff);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
 
-    .envelope {
-      width: 200px;
-      height: 150px;
-      background: #007BFF;
+    .container {
       position: relative;
+      width: 250px;
+      height: 200px;
       cursor: pointer;
-      transition: transform 0.5s;
-      border-radius: 5px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    .envelope::before,
-    .envelope::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
+    .envelope {
+      width: 100%;
+      height: 100%;
+      background: #007BFF;
+      border-radius: 10px;
+      position: relative;
+      transition: transform 0.6s ease-in-out;
     }
 
     .envelope::before {
+      content: '';
+      position: absolute;
       top: 0;
       left: 0;
-      border-width: 0 100px 75px 100px;
-      border-color: transparent transparent #007BFF transparent;
-      z-index: 2;
-      transition: transform 0.5s;
+      border-left: 125px solid transparent;
+      border-right: 125px solid transparent;
+      border-bottom: 100px solid #0056b3;
+      transition: transform 0.6s;
       transform-origin: top;
     }
 
     .letter {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
+      width: 220px;
       padding: 20px;
-      width: 180px;
-      text-align: center;
+      background: white;
       border-radius: 10px;
-      opacity: 0;
-      transition: all 0.5s ease-in-out;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .hearts {
       position: absolute;
       top: 50%;
       left: 50%;
-      pointer-events: none;
+      transform: translate(-50%, 100%);
+      opacity: 0;
+      text-align: center;
+      font-size: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.8s ease;
+      z-index: 2;
     }
 
     .heart {
+      position: absolute;
       width: 20px;
       height: 20px;
       background: red;
-      position: absolute;
       transform: rotate(45deg);
-      animation: float 2s ease-out forwards;
+      animation: floatHeart 3s ease-out forwards;
+      opacity: 0.9;
     }
 
     .heart::before,
     .heart::after {
       content: '';
+      position: absolute;
       width: 20px;
       height: 20px;
       background: red;
-      position: absolute;
       border-radius: 50%;
     }
 
@@ -91,55 +85,53 @@
       top: -10px;
       left: 0;
     }
-
     .heart::after {
       top: 0;
       left: -10px;
     }
 
-    @keyframes float {
+    @keyframes floatHeart {
       0% {
+        transform: translateY(0) scale(1);
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
       }
       100% {
+        transform: translateY(-200px) scale(1.5);
         opacity: 0;
-        transform: translate(-50%, -200%) scale(1.5);
       }
+    }
+
+    .open .envelope::before {
+      transform: rotateX(180deg);
     }
 
     .open .letter {
-      top: -130px;
+      transform: translate(-50%, -60%);
       opacity: 1;
-    }
-
-    .open::before {
-      transform: rotateX(180deg);
     }
   </style>
 </head>
 <body>
-  <div class="envelope" onclick="openEnvelope()">
-    <div class="letter">Te amo, meu amor ❤️</div>
-    <div class="hearts" id="hearts-container"></div>
+  <div class="container" onclick="abrirCarta()">
+    <div class="envelope"></div>
+    <div class="letter">Te amo, meu amor! ❤️</div>
   </div>
 
   <script>
-    let opened = false;
+    let aberta = false;
 
-    function openEnvelope() {
-      if (opened) return;
-      opened = true;
-      const envelope = document.querySelector('.envelope');
-      envelope.classList.add('open');
-
-      const heartsContainer = document.getElementById('hearts-container');
-      for (let i = 0; i < 20; i++) {
+    function abrirCarta() {
+      if (aberta) return;
+      aberta = true;
+      document.querySelector('.container').classList.add('open');
+      for (let i = 0; i < 30; i++) {
         const heart = document.createElement('div');
         heart.classList.add('heart');
-        heart.style.left = `${Math.random() * 100 - 50}%`;
-        heart.style.animationDelay = `${Math.random()}s`;
-        heartsContainer.appendChild(heart);
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.top = '100%';
+        heart.style.animationDelay = (Math.random() * 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
       }
     }
   </script>
