@@ -1,33 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Te amo, muito!</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Namorada ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .start-screen {
+            text-align: center;
+            color: white;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(238, 90, 111, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(238, 90, 111, 0.6);
+        }
+
+        .envelope-container {
+            display: none;
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .envelope-back {
+            width: 100%;
+            height: 100%;
+            background: #f0f8ff;
+            border: 3px solid #4169e1;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .envelope-flap {
+            width: 100%;
+            height: 50%;
+            background: #e6f3ff;
+            border: 3px solid #4169e1;
+            border-bottom: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom center;
+            transition: transform 2s ease-in-out;
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .envelope-flap::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #e6f3ff;
+            border-bottom-color: #e6f3ff;
+            z-index: 2;
+        }
+
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 147px solid transparent;
+            border-right: 147px solid transparent;
+            border-bottom: 97px solid #4169e1;
+            z-index: 1;
+        }
+
+        .envelope.opened .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .letter {
+            width: 80%;
+            height: 60%;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(20px);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 1.5s ease-in-out 0.5s;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ff1493;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 20, 147, 0.3);
+        }
+
+        .envelope.opened .letter {
+            opacity: 1;
+            transform: translate(-50%, -50%) translateY(-10px);
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 20px;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .envelope.opened .heart {
+            animation: heartFloat 4s ease-in-out infinite;
+        }
+
+        .heart:nth-child(1) { top: 20%; left: 20%; animation-delay: 1s; }
+        .heart:nth-child(2) { top: 30%; right: 20%; animation-delay: 1.5s; }
+        .heart:nth-child(3) { top: 50%; left: 10%; animation-delay: 2s; }
+        .heart:nth-child(4) { top: 40%; right: 15%; animation-delay: 2.5s; }
+        .heart:nth-child(5) { top: 60%; left: 80%; animation-delay: 3s; }
+
+        .message {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            font-size: 18px;
+            opacity: 0;
+            animation: fadeInMessage 2s ease-in-out 3s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes heartFloat {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translateY(0px) scale(0.8); 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1); 
+            }
+            80% { 
+                opacity: 1; 
+                transform: translateY(-40px) scale(1.2); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-60px) scale(0.8); 
+            }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .click-hint {
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 16px;
+            opacity: 0;
+            animation: pulse 2s ease-in-out infinite;
+            animation-delay: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="envelope-wrapper">
-    <div id="envelope" class="close">
-      <div class="front flap"></div>
-      <div class="front pocket"></div>
-      <div class="letter">
-        <div class="words line1">Para: Lara</div>
-        <div class="words line2">No azul dos dias, seu nome eu sei,</div>
-        <div class="words line3">Lara, tão bonita quanto a música Margaret,</div>
-        <div class="words line4">Teu riso acende o céu que caiu.</div>
-      </div>
+    <div class="start-screen" id="startScreen">
+        <h1>Para Minha Namorada Especial 💙</h1>
+        <button class="start-button" onclick="startAnimation()">START</button>
     </div>
-    <button id="open">OPEN</button>
-    <button id="close">CLOSE</button>
-  </div>
 
-  <script>
-    const openBtn = document.getElementById('open');
-    const closeBtn = document.getElementById('close');
-    const envelope = document.getElementById('envelope');
+    <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap"></div>
+            <div class="letter">Te Amo ❤️</div>
+        </div>
+        <div class="heart">💙</div>
+        <div class="heart">💖</div>
+        <div class="heart">💕</div>
+        <div class="heart">💗</div>
+        <div class="heart">💝</div>
+        <div class="click-hint" id="clickHint">Clique no envelope para abrir</div>
+        <div class="message">
+            Você é tudo para mim! 💙✨
+        </div>
+    </div>
 
-    openBtn.addEventListener('click', () => envelope.classList.remove('close'));
-    closeBtn.addEventListener('click', () => envelope.classList.add('close'));
-  </script>
+    <script>
+        function startAnimation() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('envelopeContainer').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('clickHint').style.opacity = '1';
+            }, 1000);
+        }
+
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const clickHint = document.getElementById('clickHint');
+            
+            envelope.classList.add('opened');
+            clickHint.style.display = 'none';
+            
+            // Adiciona mais corações depois que abre
+            setTimeout(() => {
+                createFloatingHearts();
+            }, 2000);
+        }
+
+        function createFloatingHearts() {
+            const hearts = ['💙', '💖', '💕', '💗', '💝', '❤️'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.position = 'absolute';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = '100%';
+                heart.style.fontSize = '24px';
+                heart.style.animation = 'heartFloat 4s ease-in-out forwards';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '10';
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 800);
+        }
+    </script>
 </body>
-</html>
+  </html>
